@@ -8,6 +8,8 @@ import { ethers } from "hardhat";
 import { execPath } from "process";
 import { LifeCycleManager, LifeCycleManager__factory } from "../typechain-types";
 import { LifeCycleNFT, LifeCycleNFT__factory } from "../typechain-types";
+import { keccak256 } from "@ethersproject/keccak256";
+import { toUtf8Bytes } from "@ethersproject/strings";
 
 
 describe("LifeCycle Manager", async () => {
@@ -79,17 +81,19 @@ describe("LifeCycle Manager", async () => {
         let doSomethingTx : ContractTransaction;
         let doSomethingReceipt : ContractReceipt;
         const BLABLA="blabla";
-
+        
+        const SIGNATURE = keccak256(toUtf8Bytes(BLABLA));
+        
         beforeEach(async () => {
           const nftids = await lifecycleContract.connect(accounts[1]).getIds();
 
-          doSomethingTx = await lifecycleContract.connect(accounts[1]).doSomething(BigNumber.from(nftids[0]), BLABLA);
+          doSomethingTx = await lifecycleContract.connect(accounts[1]).doSomething(BigNumber.from(nftids[0]), SIGNATURE);
           doSomethingReceipt = await doSomethingTx.wait();         
         });
 
         it("the action is recorded in a transaction", async () => {
           const decodedData = lifecycleContract.interface.parseTransaction( {data:doSomethingTx.data, value:doSomethingTx.value});
-          expect(BLABLA).to.eq(decodedData.args.message);
+          expect(SIGNATURE).to.eq(decodedData.args.message);
         });
 
       });
