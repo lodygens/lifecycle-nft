@@ -1,4 +1,3 @@
-
 <header class="p-3 text-bg-dark">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -33,29 +32,36 @@
   </div>
 </header>
 
-<div *ngIf="!metamask" class="col-lg-6 mx-auto" style="text-align:center;">
+<div *ngIf="!metamask" style="text-align:center;">
   <h1>
     <p>You must install <i>Metamask</i>. </p>
     <p>Please click here <a href="https://metamask.io/">Install Metamask</a></p>
   </h1>
 </div>
 <div *ngIf="metamask" class="col-lg-6 mx-auto" style="text-align:center;">
-  <div id="home" class="col-lg-6 mx-auto" style="text-align:center;visibility:visible">
-    <h1>Welcome
-    </h1>
-    <div id="mint" class="col-lg-6 mx-auto" style="text-align:center;visibility:hidden">
-      <h1>Mint
-      </h1>
+  <main class="px-3" style="text-align:center;visibility:visible;">
+    <div style="position:relative;width:100%;height:100%">
+      <div id="home" 
+        style="text-align:center;visibility:visible;position:absolute;top:0;left:0;width:100%;height:100%">
+        <h1>Welcome
+        </h1>
+        <div id="mint" 
+          style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
+          <h1>Mint
+          </h1>
+        </div>
+        <div id="use" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
+          <h1>Use
+          </h1>
+        </div>
+        <div id="history" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
+          <h1>History </h1>
+        </div>
+        <div id="about"  style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%;">
+          <h1>About
+          </h1>
+        </div>
+      </div>
     </div>
-    <div id="use" class="col-lg-6 mx-auto" style="text-align:center;visibility:hidden">
-      <h1>Use
-      </h1>
-    </div>
-    <div id="history" class="col-lg-6 mx-auto" style="text-align:center;visibility:hidden">
-      <h1>History      </h1>
-    </div>
-    <div id="about" class="col-lg-6 mx-auto" style="text-align:center;visibility:hidden">
-      <h1>About
-      </h1>
-    </div>
-  </div>
+  </main>
+</div>
