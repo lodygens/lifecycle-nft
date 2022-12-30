@@ -1,8 +1,8 @@
 # NFT life cycle
 
-This project demonstrates how to follow the lifecycle of an NFT
+This project implements NFT lifecycle
 
-NFt lifecycle consists of
+NFT lifecycle consists of
 1. being created for a user who is the 1st owner
 2. potentaly, being passed / sold between users
 3. register actions for that NFT
