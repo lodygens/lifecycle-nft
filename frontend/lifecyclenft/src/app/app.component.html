@@ -1,4 +1,33 @@
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+      </a>
 
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 text-white" (click)="toggleHome();">Home</a></li>
+        <li>
+          <a href="#" class="nav-link px-2 text-white" (click)="toggleAbout();">
+            About
+          </a>
+        </li>
+      </ul>
+
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+          aria-label="Search">
+      </form>
+
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2">Login</button>
+        <button type="button" class="btn btn-warning">Sign-up</button>
+      </div>
+    </div>
+  </div>
+</header>
 
 <div *ngIf="!metamask" style="text-align:center;">
   <h1>
@@ -25,21 +54,55 @@
           <p>Address du gestionnaire de cycle de vie : {{lifeCycleMgrAddr}}</p>
         </div>
         <div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="mintNFT()" style="margin: 5px;">Créer un nouvel NFT</button>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="mintNFT()" style="margin: 5px;">Créer un
+            nouvel NFT</button>
           <div id="nftList">
           </div>
         </div>
         <div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="getNFTList()" style="margin: 5px;">Lister vos NFT</button>
-          <div id="nftList">
+          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="getNFTList()" style="margin: 5px;">Lister
+            vos NFT</button>
+          <div *ngIf="nftIds" id="nftList">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>NFT Id</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let id of nftIds">
+                  <td>{{id}}</td>
+                  <td>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin: 5px;">Nouvelle
+                      action</button>
+                  </td>
+                  <td>
+                    <!--
+                      <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin: 5px;" onclick="javascript:toggleHistory();">Historique</button>
+-->
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin: 5px;"
+                      (click)="getNFTHistory();">Historique</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
       </div>
-    </div>
-    <div id="about" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%;">
-      <h1>About
-      </h1>
+      <div id="history"
+        style="text-align:center;visibility:hidden;position:absolute;top:0px;left:0px;width:100%;height:100%;">
+        <h1>Historique
+        </h1>
+      </div>
+
+      <div id="about"
+        style="text-align:center;visibility:hidden;position:absolute;top:0px;left:0px;width:100%;height:100%;">
+        <h1>A propos
+        </h1>
+      </div>
     </div>
   </main>
 </div>
