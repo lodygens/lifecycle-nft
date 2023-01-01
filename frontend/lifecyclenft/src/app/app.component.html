@@ -1,67 +1,45 @@
-<header class="p-3 text-bg-dark">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
-      </a>
 
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 text-secondary" onclick="javascript:toggleHome();">Home</a></li>
-        <li><a href="#" class="nav-link px-2 text-white" onclick="javascript:toggleMint();">Mint NFT</a></li>
-        <li><a href="#" class="nav-link px-2 text-white" onclick="javascript:toggleUse();">Use NFT</a></li>
-        <li><a href="#" class="nav-link px-2 text-white" onclick="javascript:toggleHistory();">NFT History</a></li>
-        <li>
-          <a href="#" class="nav-link px-2 text-white" onclick="javascript:toggleAbout();">
-            About
-          </a>
-        </li>
-      </ul>
-
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-          aria-label="Search">
-      </form>
-
-      <div class="text-end">
-        <button type="button" class="btn btn-outline-light me-2">Login</button>
-        <button type="button" class="btn btn-warning">Sign-up</button>
-      </div>
-    </div>
-  </div>
-</header>
 
 <div *ngIf="!metamask" style="text-align:center;">
   <h1>
-    <p>You must install <i>Metamask</i>. </p>
-    <p>Please click here <a href="https://metamask.io/">Install Metamask</a></p>
+    <p>Vous devez installer <i>Metamask</i>. </p>
+    <p>Suivez ce lien pour <a href="https://metamask.io/">installer Metamask</a></p>
   </h1>
 </div>
+
 <div *ngIf="metamask" class="col-lg-6 mx-auto" style="text-align:center;">
   <main class="px-3" style="text-align:center;visibility:visible;">
-    <div style="position:relative;width:100%;height:100%">
-      <div id="home" 
-        style="text-align:center;visibility:visible;position:absolute;top:0;left:0;width:100%;height:100%">
-        <h1>Welcome
-        </h1>
-        <div id="mint" 
-          style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
-          <h1>Mint
+    <div *ngIf="!connected">
+      <img class="mb-4" src="../assets/brand/iexec.svg" alt="iExec Blockchain Technology" width="100"
+        style="padding-top: 10px;">
+      <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="connect()">Connect</button>
+      <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+    </div>
+    <div *ngIf="connected" style="position:relative;width:100%;height:100%">
+      <div id="home" style="text-align:center;visibility:visible;position:absolute;top:0;left:0;width:100%;height:100%">
+        <div>
+          <h1>Bienvenue
           </h1>
+          <p>Cette application décentralisée permet de créer et suivre le cycle de vie de vos NFT.</p>
+          <p>Address du NFT : {{nftContractAddr}}</p>
+          <p>Address du gestionnaire de cycle de vie : {{lifeCycleMgrAddr}}</p>
         </div>
-        <div id="use" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
-          <h1>Use
-          </h1>
+        <div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="mintNFT()" style="margin: 5px;">Créer un nouvel NFT</button>
+          <div id="nftList">
+          </div>
         </div>
-        <div id="history" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%">
-          <h1>History </h1>
+        <div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="getNFTList()" style="margin: 5px;">Lister vos NFT</button>
+          <div id="nftList">
+          </div>
         </div>
-        <div id="about"  style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%;">
-          <h1>About
-          </h1>
-        </div>
+
       </div>
+    </div>
+    <div id="about" style="text-align:center;visibility:hidden;position:absolute;top:0;left:0;width:100%;height:100%;">
+      <h1>About
+      </h1>
     </div>
   </main>
 </div>
