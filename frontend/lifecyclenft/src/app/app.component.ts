@@ -1,11 +1,13 @@
 //import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { BigNumber, ethers, Wallet } from 'ethers';
+import { BigNumber, ContractTransaction, ethers, Transaction, Wallet } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import nftJson from '../assets/contracts/LifeCycleNFT.json'
 import lifecycleMgrJson from '../assets/contracts/LifeCycleManager.json'
 import { environment } from "../environments/environment";
 import { bufferToggle } from 'rxjs';
+import { keccak256 } from "@ethersproject/keccak256";
+import { toUtf8Bytes } from "@ethersproject/strings";
 
 @Component({
   selector: 'app-root',
@@ -104,6 +106,22 @@ export class AppComponent {
     this.toggle("about");
   }
 
+
+  toggleSavingAction(){
+    const what ="savingAction";
+    console.log('[toggleSavingAction]');
+
+    const elementSaving = document.getElementById(what) as HTMLInputElement;
+    if (!elementSaving)
+      throw new Error("element not found " + what)
+
+      const currentVisibility = elementSaving.style.visibility;
+      if (currentVisibility == "visible")
+        elementSaving.style.visibility = "hidden";
+      else
+        elementSaving.style.visibility = "visible";
+    }
+
   //constructor(private http: HttpClient) {
   constructor() {
     const provider = detectEthereumProvider();
@@ -194,31 +212,46 @@ export class AppComponent {
     console.log("[doSomething] tokenId " + this.currentToken);
 
     let what = "doSomethingMessage";
-    const elementMsg = document.getElementById(what) as HTMLInputElement;
-    if (!elementMsg)
+    let element = document.getElementById(what) as HTMLInputElement;
+    if (!element)
       throw new Error("element not found " + what)
 
-    console.log("[doSomething] message " + elementMsg.value);
+    const message = element.value as string;
+    console.log("[doSomething] message " + message);
 
     what = "doSomethingSave";
-    const elementSave = document.getElementById(what) as HTMLInputElement;
-    if (!elementMsg)
+    element = document.getElementById(what) as HTMLInputElement;
+    if (!element)
       throw new Error("element not found " + what)
 
-    console.log("[doSomething] save " + elementSave.checked);
+    const save = element.checked as boolean;
+    console.log("[doSomething] save " + save);
 
-/*
-      signer.getAddress().then((adresse) => {
+    what = "doSomethingPrivacy";
+    element = document.getElementById(what) as HTMLInputElement;
+    if (!element)
+      throw new Error("element not found " + what)
+
+    const privacy = element.checked as boolean;
+    console.log("[doSomething] privacy " + privacy);
+
+    signer.getAddress().then((adresse) => {
       if (!this.lifeCycleMgrContract)
         throw new Error("LifeCycle Mgr Contract not found");
 
-      console.log("[mintNFT] " + adresse);
+      let msg = message;
+      if (privacy)
+        msg = keccak256(toUtf8Bytes(message));
 
-      this.lifeCycleMgrContract.connect(signer)['doSomething'](id, message).then(() => {
-        console.log("[mintNFT] done");
+        console.log("[doSomething] " + msg);
+
+      this.lifeCycleMgrContract.connect(signer)['doSomething'](this.currentToken, msg).then((tx : ContractTransaction) => {
+        tx.wait().then((receipt) => {
+          console.log("[doSomething] " + receipt.transactionHash);
+        })
       })
     })
-*/
+
   }
 
   /**
@@ -238,5 +271,6 @@ export class AppComponent {
       })
     })
   }
+
 }
 
